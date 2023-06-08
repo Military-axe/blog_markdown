@@ -1,7 +1,7 @@
 +++
 title = "GotYouKey"
 categories = [
-    "reverse",
+    "Reverse",
 ]
 date = "2023-06-07T13:37:53+08:00"
 tags = [
