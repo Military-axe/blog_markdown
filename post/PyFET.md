@@ -1,5 +1,5 @@
 ---
-title: "PyFET: Forensically Equivalent Transformation for Python Binary Decompilation."
+title: "PyFET: Forensically Equivalent Transformation for Python Binary Decompilation"
 date: 2023-06-10T21:12:15+08:00
 categories:
 - Paper
