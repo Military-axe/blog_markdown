@@ -1,5 +1,5 @@
 +++
-title = "GotYouKey"
+title = "2023 XCTF GotYouKey Write Up"
 categories = [
     "Reverse",
 ]

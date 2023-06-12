@@ -107,7 +107,7 @@ The section .eh_frame contains:
 ```
 
 整个eh_frame结构一般是一个CIE块加多个FDE块，连续存放。一般来说，一个CIE代表一个文件，一个FDE代表一个函数。
-下图是使用`readelf **-wF**`查看的文件信息，其实和上一条命令大差不差的。
+下图是使用`readelf -wF`查看的文件信息，其实和上一条命令大差不差的。
 
 <center><img src="https://raw.githubusercontent.com/Military-axe/imgtable/main/202306111542999.webp" style="zoom:80%;" /></center>
 
