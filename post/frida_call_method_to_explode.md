@@ -115,6 +115,8 @@ var obj = cls.$new();
 
 # Easy-QAHE17
 
+题目地址：[ctf/2023/Easy-QAHE17 at master · Military-axe/ctf · GitHub](https://github.com/Military-axe/ctf/tree/master/2023/Easy-QAHE17)
+
 首先是看Sakura中提到的题目，也就是吾爱破解的一道题目。核心代码如下
 
 ```java
@@ -193,7 +195,9 @@ yes: 9083
 
 # EasyJava
 
-这题的正常解法可以查到：[攻防世界新手练习题_MOBILE(移动) - 菜鸟-传奇 - 博客园 (cnblogs.com)](https://www.cnblogs.com/cainiao-chuanqi/p/13565030.html)
+题目地址：[ctf/2023/easyjava at master · Military-axe/ctf · GitHub](https://github.com/Military-axe/ctf/tree/master/2023/easyjava)
+
+这题的正常解法可以查到：[攻防世界新手练习题_MOBILE(移动)](https://www.cnblogs.com/cainiao-chuanqi/p/13565030.html)
 
 这题是纯java题，逻辑很清晰，对输入的每一个字符单个检查，加密并对比。所以可以很简单的想到爆破的思路
 
