@@ -496,47 +496,116 @@ flag: `flag{T4ee_Travel_M@kes_me_H@ppy!!}`
 
 搜索字符串，发现base64字符表，然后在程序中查找base64相关函数，发现在main_thirdChall中有一个base64字符串
 
-![image-20230927142447580](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309271424043.png)
+```c
+.text:00000000003FFAE0 E8 FB 06 FE FF                call    encoding_base64___Encoding__EncodeToString
+.text:00000000003FFAE0
+.text:00000000003FFAE5 48 83 FB 28                   cmp     rbx, 28h ; '('
+.text:00000000003FFAE9 75 19                         jnz     short loc_3FFB04
+.text:00000000003FFAE9
+.text:00000000003FFAEB 48 8D 1D 30 49 02 00          lea     rbx, aReftq1rge2hhc2            ; "REFTQ1RGe2hhc2FraS1wZHR6cHR6LXZ4bmZudX0"...
+.text:00000000003FFAF2 B9 28 00 00 00                mov     ecx, 28h ; '('
+.text:00000000003FFAF7 E8 44 2D F6 FF                call    runtime_memequal
+.text:00000000003FFAF7
+.text:00000000003FFAFC 0F 1F 40 00                   nop     dword ptr [rax+00h]
+.text:00000000003FFB00 84 C0                         test    al, al
+.text:00000000003FFB02 75 61                         jnz     short loc_3FFB65
+```
 
-解码后得到一个flag但是不对
+直接解码上图base64的密文（`REFTQ1RGe2hhc2FraS1wZHR6cHR6LXZ4bmZudX0=`）得到一个flag`DASCTF{hasaki-pdtzptz-vxnfnu}`
 
-![image-20230927142524503](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309272303034.png)
+但是这个flag不对，其实只有中间那部分不对。
 
 这是main_thirdChall前面还有main_firstChall和main_secondChall
 
 查看前面的代码，main_firstChall有检查长度的部分
 
-![image-20230927142632687](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309272301421.png)
+```c
+  if ( v0 != 6 )
+  {
+    fmt_Fprintln();
+    main_menu();
+    return 0LL;
+  }
+```
 
 运行程序后，测试多次发现输入`DASCTF{hasaki-pdtzptz-vxnfnu}`中的第一个部分`hasaki`可以通过
 
-![image-20230927142800496](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309271428183.png)
+实际上看汇编或者动态调试分析main_firstChall是输入6个字符，rot13后和密文对比
 
-然后第二部分测试后发现输入`DASCTF{hasaki-pdtzptz-vxnfnu}`中的第三个部分`vxnfnu`可以通过
+```c
+  if ( v4 != 6 || *(_DWORD *)v3 != 'nfnu' || *(_WORD *)(v3 + 4) != 'vx' )// unfnxv 调试发现是rot13后的结果
+  {
+    fmt_Fprintln();
+    main_menu();
+    return v9;
+  }
+```
 
-![image-20230927143224668](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309271432389.png)
+`unfnxv`rot13加密后得到的就是`hasaki`，所以第一关的输入就是`hasaki`
 
-然后第三个部分要求输入是29个字符，然后处理输入后base64加密对比密文，可以想到输入就是类似DASCTF{hasaki-pdtzptz-vxnfnu}的形式，只是中间那一段被处理了，我们调试这一部分
+然后第二部分测试后发现输入`DASCTF{hasaki-pdtzptz-vxnfnu}`中的第三个部分`vxnfnu`可以通过。
 
-然后下断点到base64加密钱
+一定要分析的话，下断点到对比密文的地方就可以了，因为不加密输入，而是加密其他数据，然后和输入对比，所以动调就可以得到正确的输入是`vxnfnu`
 
-![image-20230927143442718](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309272302296.png)
+```c
+  if ( v8 == a1 && (unsigned __int8)runtime_memequal() )// vxnfnu
+    return runtime_slicerunetostring();
+```
+
+然后第三个部分要求输入是29个字符，然后处理输入后base64加密对比密文，可以想到输入就是类似`DASCTF{hasaki-pdtzptz-vxnfnu}`的形式，只是中间那一段被处理了，我们调试这一部分
+
+然后下断点到base64加密前，然后开始调试
 
 前两关就还是输入`hasaki`,`vxnfnu`，第三个直接输入错误的flag，通过调试看看差别在哪里
 
-![image-20230927143645624](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309272303276.png)
+```sh
+欢迎来到小林的世界
+请选择您要进行的操作：
+1. 自我介绍
+2. 开始闯关
+3. 关闭程序
+请输入操作选项：2
+有一天小林发现了一张古老地图，上面标记着一个传说中的宝藏。然而，为了找到宝藏，需要先找到一把铜钥匙。
+:: hasaki
+恭喜你找到了铜钥匙！
+于是他开始沿着地图指示的路径进行探索。经过长时间的跋涉和寻找，他最终来到了一个神秘的洞穴。在洞穴中，他看到了一扇大门，门上有一个锁。他观察了一下锁孔，发现需要一把银钥匙才能打开。
+:: vxnfnu
+恭喜你找到了银钥匙！
+于是他开始四处搜索，但是任何线索都没有找到金钥匙。这时候，他想起了地图上的一些细节，破解了一些谜题，得到了一些提示。这些提示指向了一个古老的祭坛，据说这里曾经有传说中的金钥匙。
+:: DASCTF{hasaki-pdtzptz-vxnfnu}
+```
 
-可以发现flag中间那段变了
+然后查看内存，可以发现flag中间那段变了
 
-![image-20230927143927802](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309272303102.png)
+```
+000000C0000ABD20  07 00 00 00 00 00 00 00  44 41 53 43 54 46 7B 68  ........DASCTF{h
+000000C0000ABD30  61 73 61 6B 69 2D 75 69  79 65 75 79 65 2D 76 78  asaki-uiyeuye-vx
+000000C0000ABD40  6E 66 6E 75 7D 00 00 00  AE 81 01 00 C0 00 00 00  nfnu}...........
+```
 
 我们输入的是`pdtzptz`，变成了`uiyeuye`
 
-像misc一样测试一下偏移，发现每个字符差5，就是凯撒密码，所以就逆着求一个凯撒就可以
+像misc一样测试一下偏移，发现每个字符差5，就是凯撒密码，所以解一下cyberchef解一下凯撒可以得到flag
 
-![image-20230927144133716](https://raw.githubusercontent.com/Military-axe/imgtable/main/202309272303214.png)
+```
+欢迎来到小林的世界
+请选择您要进行的操作：
+1. 自我介绍
+2. 开始闯关
+3. 关闭程序
+请输入操作选项：2
+有一天小林发现了一张古老地图，上面标记着一个传说中的宝藏。然而，为了找到宝藏，需要先找到一把铜钥匙。
+:: hasaki
+恭喜你找到了铜钥匙！
+于是他开始沿着地图指示的路径进行探索。经过长时间的跋涉和寻找，他最终来到了一个神秘的洞穴。在洞穴中，他看到了一扇大门，门上有一个锁。他观察了一下锁孔，发现需要一把银钥匙才能打开。
+:: vxnfnu
+恭喜你找到了银钥匙！
+于是他开始四处搜索，但是任何线索都没有找到金钥匙。这时候，他想起了地图上的一些细节，破解了一些谜题，得到了一些提示。这些提示指向了一个古老的祭坛，据说这里曾经有传说中的金钥匙。
+:: DASCTF{hasaki-kyoukou-vxnfnu}
+恭喜你获取到了金钥匙，这就是最终的宝藏！
+```
 
-所以flag就是`DASCTF{hasaki-kyoukou-vxnfnu}`
+flag: `DASCTF{hasaki-kyoukou-vxnfnu}`
 
 ## 附件
 
