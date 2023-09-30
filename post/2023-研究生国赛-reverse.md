@@ -8,9 +8,12 @@ tags:
 - 反调试
 - 2023
 - 研究生国赛
+- base64
 ---
 
 4道题做了3到，都不太方便纯静态，动调倒是都挺简单的. 最后一题unity的游戏没什么经验，不知道怎么下手，CE也没下就放弃了
+
+更新：又看了一下其实unity还是很简单，只是忘记dnspy该展开那个类了，（我说怎么看不到代码呢
 
 <!--more-->
 
@@ -606,6 +609,288 @@ flag: `flag{T4ee_Travel_M@kes_me_H@ppy!!}`
 ```
 
 flag: `DASCTF{hasaki-kyoukou-vxnfnu}`
+
+## Robbie gave up
+
+这是一道unity的游戏题目，根据经验（~~就是上网搜一下~~），来到`Robbie gave up/Robbie gave up_Data/Managed/Assembly-CSharp.dll`，使用dnspy打开Assembly-CSharp.dll就可以看到具体的逻辑代码了
+
+这是一道游戏题目，应该是游戏通关后才会出现flag，所以定位到游戏结束附件，所在类是`WinZone`
+
+一路观察代码，看下去发现在Robbie类中有一个win方法会被调用到
+
+```c#
+using System;
+using System.Reflection;
+using UnityEngine;
+
+// Token: 0x02000014 RID: 20
+public class Robbie : MonoBehaviour
+{
+	// Token: 0x0600005C RID: 92 RVA: 0x0001080C File Offset: 0x0000EA0C
+	public static object Win()
+	{
+		for (int i = GameManager.instance.orbs.Count; i < Robbie.data1.Length; i++)
+		{
+			Robbie.data2[i] = (byte)(Robbie.data1[i] ^ i);
+		}
+		Type type = Assembly.Load(Robbie.data2).GetType("ClassLibrary1.Class1");
+		object obj = type.GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+		return type.GetMethod("Method").Invoke(obj, null).ToString();
+	}
+
+	// Token: 0x04000084 RID: 132
+	private static int[] data1 = new int[]
+	{
+		77,
+		91,
+		146,
+		3,
+		7,
+        ...
+    };
+```
+
+这里调用了data1数据，解密后保存成`ClassLibrary1.Class1`类，然后调用其中的方法得到flag
+
+我手动解密一下，保存出来，看到具体代码如下。
+
+```c#
+// ClassLibrary1.Class1
+// Token: 0x06000001 RID: 1 RVA: 0x00002130 File Offset: 0x00000330
+public static string Method()
+{
+	string x = "はりずめはばぐだすだちずそぬけびせやのぞはとらよはやこらのとほめせだむばのだのぢはやよぢせりにやのばぢ";
+	return new Crypt().Decode(x);
+}
+```
+
+```c#
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Libraries
+{
+	// Token: 0x02000003 RID: 3
+	public class Crypt
+	{
+		// Token: 0x06000003 RID: 3 RVA: 0x00002058 File Offset: 0x00000258
+		public Crypt()
+		{
+			this.T = new List<char>();
+			this.K = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやよらりるれろわをぐげござじずぞだぢづでばびぶべぱぴぷぺぽ";
+		}
+
+		// Token: 0x17000001 RID: 1
+		// (get) Token: 0x06000004 RID: 4 RVA: 0x00002076 File Offset: 0x00000276
+		// (set) Token: 0x06000005 RID: 5 RVA: 0x00002150 File Offset: 0x00000350
+		public string Token
+		{
+			get
+			{
+				if (this.S != null)
+				{
+					return this.S;
+				}
+				return this.K;
+			}
+			set
+			{
+				this.T.Clear();
+				this.S = value;
+				if (this.S == null)
+				{
+					foreach (char item in this.K)
+					{
+						this.T.Add(item);
+					}
+					return;
+				}
+				if (this.S.Length < 64)
+				{
+					foreach (char item2 in this.S)
+					{
+						this.T.Add(item2);
+					}
+					for (int j = 0; j < 64 - this.S.Length; j++)
+					{
+						this.T.Add(this.K[j]);
+					}
+					return;
+				}
+				for (int k = 0; k < 64; k++)
+				{
+					this.T.Add(this.S[k]);
+				}
+			}
+		}
+
+		// Token: 0x06000006 RID: 6 RVA: 0x0000208D File Offset: 0x0000028D
+		public string Encode(string x)
+		{
+			if (!string.IsNullOrEmpty(x))
+			{
+				return this.InternalEncode(Encoding.UTF8.GetBytes(x));
+			}
+			return x;
+		}
+
+		// Token: 0x06000007 RID: 7 RVA: 0x000020AA File Offset: 0x000002AA
+		public string Decode(string x)
+		{
+			if (!string.IsNullOrEmpty(x))
+			{
+				return Encoding.UTF8.GetString(this.InternalDecode(x));
+			}
+			return x;
+		}
+
+		// Token: 0x06000008 RID: 8 RVA: 0x000020C7 File Offset: 0x000002C7
+		public byte[] Encode(byte[] x)
+		{
+			if (x != null)
+			{
+				return Encoding.UTF8.GetBytes(this.InternalEncode(x));
+			}
+			return null;
+		}
+
+		// Token: 0x06000009 RID: 9 RVA: 0x000020DF File Offset: 0x000002DF
+		public byte[] Decode(byte[] x)
+		{
+			if (x != null)
+			{
+				return this.InternalDecode(Encoding.UTF8.GetString(x));
+			}
+			return null;
+		}
+
+		// Token: 0x0600000A RID: 10 RVA: 0x000020F7 File Offset: 0x000002F7
+		private void CheckToken()
+		{
+			if (this.T.Count != 64)
+			{
+				this.Token = this.K;
+			}
+		}
+
+		// Token: 0x0600000B RID: 11 RVA: 0x00002240 File Offset: 0x00000440
+		private byte[] InternalDecode(string x)
+		{
+			this.CheckToken();
+			int num = 0;
+			int num2 = x.Length / 4;
+			int num3 = x.Length % 4;
+			byte[] array;
+			if (num3 == 0)
+			{
+				array = new byte[3 * num2];
+			}
+			else
+			{
+				array = new byte[3 * num2 + num3 - 1];
+				string text = string.Empty;
+				for (int i = num3; i > 0; i--)
+				{
+					text += this.ByteToBin((byte)this.T.IndexOf(x[x.Length - i])).Substring(2);
+				}
+				for (int j = 0; j < num3 - 1; j++)
+				{
+					array[3 * num2 + j] = this.BinToByte(text.Substring(8 * j, 8));
+				}
+			}
+			for (int k = 0; k < num2; k++)
+			{
+				string text = string.Empty;
+				for (int l = 0; l < 4; l++)
+				{
+					text += this.ByteToBin((byte)this.T.IndexOf(x[4 * k + l])).Substring(2);
+				}
+				for (int m = 0; m < text.Length / 8; m++)
+				{
+					array[num++] = this.BinToByte(text.Substring(8 * m, 8));
+				}
+			}
+			return array;
+		}
+
+		// Token: 0x0600000C RID: 12 RVA: 0x00002378 File Offset: 0x00000578
+		private string InternalEncode(byte[] x)
+		{
+			this.CheckToken();
+			string text = string.Empty;
+			int num = x.Length / 3;
+			int num2 = x.Length % 3;
+			for (int i = 0; i < num; i++)
+			{
+				string text2 = string.Empty;
+				for (int j = 0; j < 3; j++)
+				{
+					text2 += this.ByteToBin(x[3 * i + j]);
+				}
+				text += this.cryptEncode(text2);
+			}
+			if (num2 == 1)
+			{
+				string text2 = this.ByteToBin(x[x.Length - 1]).PadRight(12, '0');
+				text += this.cryptEncode(text2);
+			}
+			else if (num2 == 2)
+			{
+				string text2 = string.Empty;
+				for (int k = num2; k > 0; k--)
+				{
+					text2 += this.ByteToBin(x[x.Length - k]);
+				}
+				text2 = text2.PadRight(18, '0');
+				text += this.cryptEncode(text2);
+			}
+			return text;
+		}
+
+		// Token: 0x0600000D RID: 13 RVA: 0x0000245C File Offset: 0x0000065C
+		private string cryptEncode(string x)
+		{
+			string text = string.Empty;
+			for (int i = 0; i < x.Length / 6; i++)
+			{
+				text += this.T[(int)this.BinToByte(x.Substring(6 * i, 6))].ToString();
+			}
+			return text;
+		}
+
+		// Token: 0x0600000E RID: 14 RVA: 0x00002114 File Offset: 0x00000314
+		private string ByteToBin(byte x)
+		{
+			return Convert.ToString(x, 2).PadLeft(8, '0');
+		}
+
+		// Token: 0x0600000F RID: 15 RVA: 0x00002125 File Offset: 0x00000325
+		private byte BinToByte(string x)
+		{
+			return Convert.ToByte(x, 2);
+		}
+
+		// Token: 0x04000001 RID: 1
+		private string S;
+
+		// Token: 0x04000002 RID: 2
+		private string K;
+
+		// Token: 0x04000003 RID: 3
+		private List<char> T;
+	}
+}
+
+```
+
+稍微看一下很复杂，仔细看一眼，就是**base64换表**，直接cyberchef秒了
+
+表：`あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやよらりるれろわをぐげござじずぞだぢづでばびぶべぱぴぷぺぽ`
+
+密文: `はりずめはばぐだすだちずそぬけびせやのぞはとらよはやこらのとほめせだむばのだのぢはやよぢせりにやのばぢ`
+
+flag: `flag{33419b8662e9df2ea7a787c64f946ecc}`
 
 ## 附件
 
