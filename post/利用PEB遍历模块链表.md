@@ -612,7 +612,86 @@ int main()
 
 ![image-20240318170028590](https://raw.githubusercontent.com/Military-axe/imgtable/main/202403181700975.png)
 
+>
+> 补档
+>
 
+找到这个问题的报错地点。
+
+```c
+PLIST_ENTRY64 pList = (PLIST_ENTRY64) & (pLdr->InLoadOrderModuleList);
+_LDR_DATA_TABLE_ENTRY64* pListData = (_LDR_DATA_TABLE_ENTRY64*)pList->Flink;
+```
+
+pList强制转换成(_LDR_DATA_ENTRY64*)后选用的属性是`Flink`,这在`_LDR_DATA_ENTRY64`下是没有的，修改代码
+
+```c
+_LDR_DATA_TABLE_ENTRY64* pList = (_LDR_DATA_TABLE_ENTRY64*) & (pLdr->InMemoryOrderModuleList);
+_LDR_DATA_TABLE_ENTRY64* pListData = (_LDR_DATA_TABLE_ENTRY64*)pList->InMemoryOrderLinks.Flink;
+```
+
+修改后main.cpp如下
+
+```c
+#include "header.h"
+using namespace std;
+
+void GetModuleInfo()
+{
+#if defined(_WIN64)
+    _PEB_LDR_DATA64* pLdr = (_PEB_LDR_DATA64*)GetPebLdr();
+    if (pLdr == NULL) {
+        cout << "Get Peb Ldr failed" << endl;
+        exit(0);
+    }
+
+    _LDR_DATA_TABLE_ENTRY64* pList = (_LDR_DATA_TABLE_ENTRY64*) & (pLdr->InMemoryOrderModuleList);
+    _LDR_DATA_TABLE_ENTRY64* pListData = (_LDR_DATA_TABLE_ENTRY64*)pList->InMemoryOrderLinks.Flink;
+    while ((int*)pList != (int*)pListData) {
+        /* 获取模块信息 */
+        printf("DllModuleName: %ws\r\n", pListData->FullDllName.Buffer);
+        printf("DllBaseAddr: %#016x\r\n", pListData->DllBase);
+
+        /* 链表操作 */
+        pListData =
+            (_LDR_DATA_TABLE_ENTRY64*)(pListData->InMemoryOrderLinks.Flink);
+    }
+
+#else
+    /* 获取LDR地址 */
+    _PEB_LDR_DATA* pLdr = NULL;
+    __asm {
+        mov eax, dword ptr fs:[0x30];
+        add eax, 0xc;
+        mov eax, [eax];
+        mov pLdr, eax;
+    }
+
+    if (pLdr == NULL)
+    {
+        cout << "Get Peb Ldr failed" << endl;
+        exit(0);
+    }
+
+    _LDR_DATA_TABLE_ENTRY* pList = (_LDR_DATA_TABLE_ENTRY*)&(pLdr->InMemoryOrderModuleList);
+    _LDR_DATA_TABLE_ENTRY* pListData = (_LDR_DATA_TABLE_ENTRY*)pList->InMemoryOrderLinks.Flink;
+    while ((int*)pList != (int*)pListData) {
+        /* 获取模块信息 */
+        printf("DllModuleName: %ws\r\n", pListData->FullDllName.Buffer);
+        printf("DllBaseAddr: %#08x\r\n", pListData->DllBase);
+
+        /* 链表操作 */
+        pListData = (_LDR_DATA_TABLE_ENTRY*)pListData->InMemoryOrderLinks.Flink;
+    }
+#endif
+}
+
+int main()
+{
+    GetModuleInfo();
+    return 0;
+}
+```
 
 ## 参考
 
