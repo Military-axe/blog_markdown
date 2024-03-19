@@ -612,86 +612,130 @@ int main()
 
 ![image-20240318170028590](https://raw.githubusercontent.com/Military-axe/imgtable/main/202403181700975.png)
 
->
-> 补档
->
+## Rust实现
 
-找到这个问题的报错地点。
+思路与c语言思路相同，获取Peb,找到ldr链表,循环遍历链表.下面是一个x64的实现，比较简陋，wchar类型的打印就只简单做了一个例子
 
-```c
-PLIST_ENTRY64 pList = (PLIST_ENTRY64) & (pLdr->InLoadOrderModuleList);
-_LDR_DATA_TABLE_ENTRY64* pListData = (_LDR_DATA_TABLE_ENTRY64*)pList->Flink;
-```
+```rust
+use std::arch::asm;
+use std::char;
+use std::ffi::c_void;
+use std::mem;
+use std::slice;
 
-pList强制转换成(_LDR_DATA_ENTRY64*)后选用的属性是`Flink`,这在`_LDR_DATA_ENTRY64`下是没有的，修改代码
-
-```c
-_LDR_DATA_TABLE_ENTRY64* pList = (_LDR_DATA_TABLE_ENTRY64*) & (pLdr->InMemoryOrderModuleList);
-_LDR_DATA_TABLE_ENTRY64* pListData = (_LDR_DATA_TABLE_ENTRY64*)pList->InMemoryOrderLinks.Flink;
-```
-
-修改后main.cpp如下
-
-```c
-#include "header.h"
-using namespace std;
-
-void GetModuleInfo()
-{
-#if defined(_WIN64)
-    _PEB_LDR_DATA64* pLdr = (_PEB_LDR_DATA64*)GetPebLdr();
-    if (pLdr == NULL) {
-        cout << "Get Peb Ldr failed" << endl;
-        exit(0);
-    }
-
-    _LDR_DATA_TABLE_ENTRY64* pList = (_LDR_DATA_TABLE_ENTRY64*) & (pLdr->InMemoryOrderModuleList);
-    _LDR_DATA_TABLE_ENTRY64* pListData = (_LDR_DATA_TABLE_ENTRY64*)pList->InMemoryOrderLinks.Flink;
-    while ((int*)pList != (int*)pListData) {
-        /* 获取模块信息 */
-        printf("DllModuleName: %ws\r\n", pListData->FullDllName.Buffer);
-        printf("DllBaseAddr: %#016x\r\n", pListData->DllBase);
-
-        /* 链表操作 */
-        pListData =
-            (_LDR_DATA_TABLE_ENTRY64*)(pListData->InMemoryOrderLinks.Flink);
-    }
-
-#else
-    /* 获取LDR地址 */
-    _PEB_LDR_DATA* pLdr = NULL;
-    __asm {
-        mov eax, dword ptr fs:[0x30];
-        add eax, 0xc;
-        mov eax, [eax];
-        mov pLdr, eax;
-    }
-
-    if (pLdr == NULL)
-    {
-        cout << "Get Peb Ldr failed" << endl;
-        exit(0);
-    }
-
-    _LDR_DATA_TABLE_ENTRY* pList = (_LDR_DATA_TABLE_ENTRY*)&(pLdr->InMemoryOrderModuleList);
-    _LDR_DATA_TABLE_ENTRY* pListData = (_LDR_DATA_TABLE_ENTRY*)pList->InMemoryOrderLinks.Flink;
-    while ((int*)pList != (int*)pListData) {
-        /* 获取模块信息 */
-        printf("DllModuleName: %ws\r\n", pListData->FullDllName.Buffer);
-        printf("DllBaseAddr: %#08x\r\n", pListData->DllBase);
-
-        /* 链表操作 */
-        pListData = (_LDR_DATA_TABLE_ENTRY*)pListData->InMemoryOrderLinks.Flink;
-    }
-#endif
+#[derive(Debug, Clone, Copy)]
+#[repr(C)]
+struct ListEntry64 {
+    flink: *mut ListEntry64,
+    blink: *mut ListEntry64,
 }
 
-int main()
-{
-    GetModuleInfo();
-    return 0;
+#[derive(Debug, Clone)]
+#[repr(C)]
+struct PebLdrData64 {
+    length: u32,
+    initialized: u32,
+    ss_handle: *mut c_void,
+    in_load_order_module_list: ListEntry64,
+    in_memory_order_module_list: ListEntry64,
+    in_initialization_order_module_list: ListEntry64,
+    entry_in_progress: *mut c_void,
+    shutdown_in_progress: u64,
+    shutdown_thread_id: *mut c_void,
+}
+
+#[derive(Debug, Clone, Copy)]
+#[repr(C)]
+pub struct UnicodeString {
+    length: u16,
+    maximum_length: u16,
+    buffer: *mut u16,
+}
+
+#[derive(Debug, Clone, Copy)]
+#[repr(C)]
+pub struct LdrDataTableEntry {
+    in_load_order_links: ListEntry64,
+    in_memory_order_links: ListEntry64,
+    in_initialization_order_links: ListEntry64,
+    dll_base: *mut c_void,
+    entry_point: *mut c_void,
+    size_of_image: u32,
+    full_dll_name: UnicodeString,
+    base_dll_name: UnicodeString,
+    flags: [u8; 4],
+    obsolete_load_count: u16,
+    tls_index: u16,
+    hash_links: ListEntry64,
+    time_date_stamp: u32,
+    entry_point_activation_context: u64,
+    lock: *mut c_void,
+    ddag_node: u64,
+    node_module_link: ListEntry64,
+    load_context: u64,
+    parent_dll_base: *mut c_void,
+    switch_back_context: *mut c_void,
+    base_address_index_node: u64,
+    mapping_info_index_node: u64,
+    original_base: u64,
+    load_time: u64,
+    base_name_hash_value: u32,
+    load_reason: u64,
+    implicit_path_options: u32,
+    reference_count: u32,
+    dependent_load_flags: u32,
+    signing_level: u8,
+}
+
+fn print_wchar_ptr(ptr: *const u16, length: usize) {
+    // 创建一个 &[u16] 切片
+    let wchar_slice = unsafe { slice::from_raw_parts(ptr, length) };
+
+    // 解码 UTF-16 字符为 Rust 的 Unicode 字符串
+    let unicode_string: String = char::decode_utf16(wchar_slice.iter().cloned())
+        .map(|r| r.unwrap_or(char::REPLACEMENT_CHARACTER))
+        .collect();
+
+    // 打印 Unicode 字符串
+    println!("{}", unicode_string);
+}
+
+fn main() {
+    let mut peb_ldr_data64: u64 = 0;
+    unsafe {
+        asm!(
+            "mov {0}, gs:[0x60]",
+            "add {0}, 0x18",
+            "mov {0}, [{0}]",
+            inout(reg) peb_ldr_data64
+        );
+    }
+
+    println!("PEB_LDR addr: {:#x}", peb_ldr_data64);
+    let pldr = unsafe { mem::transmute::<u64, *const PebLdrData64>(peb_ldr_data64) };
+
+    let p_list_entry64 = unsafe { &(*pldr).in_load_order_module_list as *const ListEntry64 };
+
+    /* 获取下一个节点 */
+    let mut p_ldr_data = unsafe { (*p_list_entry64).flink as *mut LdrDataTableEntry };
+
+    while p_list_entry64 as u64 != p_ldr_data as u64 {
+        /* 打印节点信息 */
+        let addr = unsafe { (*p_ldr_data).dll_base as u64 };
+        let buffer = unsafe { (*p_ldr_data).full_dll_name.buffer };
+        let buffer_len = unsafe { (*p_ldr_data).full_dll_name.length };
+        print_wchar_ptr(buffer, (buffer_len / 2) as usize);
+        println!("module addr: {:#x}", addr);
+
+        /* 遍历链表 */
+        p_ldr_data = unsafe { (*p_ldr_data).in_load_order_links.flink as *mut LdrDataTableEntry }
+    }
 }
 ```
+
+这个代码我测试发现和c语言一样有一个奇怪的问题，只有`in_load_order_module_list`这条链表能用，其他两条链表都有问题。
+
+![](https://raw.githubusercontent.com/Military-axe/imgtable/main/202403191640027.png)
 
 ## 参考
 
