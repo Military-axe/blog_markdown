@@ -1228,7 +1228,7 @@ NTSTATUS ProtectProcessHandleByEprocess(PEPROCESS pEprocess)
 
 ### 断链
 
-防护方是通过遍历私有句柄链表来查找攻击方的私有句柄表，那我们可以将私有句柄从链表上断掉，放置一个空/假的私有句柄表结构体或者直接让我们的进程私有句柄表从链表上断开
+防护方是通过遍历私有句柄链表来查找攻击方的私有句柄表，那我们可以将私有句柄从链表上断掉，放置一个空/假的私有句柄表结构体或者直接让我们的进程私有句柄表从链表上断开。可以参考github项目[HideDriver](https://github.com/nbqofficial/HideDriver)
 
 ## ObRegisterCallbacks 保护
 
@@ -1306,6 +1306,8 @@ https://www.52pojie.cn/thread-806825-1-1.html
 https://medium.com/@ashabdalhalim/a-light-on-windows-10s-object-header-typeindex-value-e8f907e7073a
 
 https://spikysabra.gitbook.io/kernelcactus/pocs/handle-elevation
+
+[HideDriver ( Direct kernel object manipulation ) | github.com](https://github.com/nbqofficial/HideDriver)
 
 >   驱动注册系统回调函数
 
