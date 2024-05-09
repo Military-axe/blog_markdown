@@ -1,18 +1,16 @@
----
-title: "2023 ciscn ezbytes Write Up"
-date: 2023-06-11T15:40:13+08:00
-categories:
-- Reverse
-tags:
-- reverse
-- dwarf
----
++++
+title = "2023 ciscn ezbytes Write Up"
+date = 2023-06-11T15:40:13+08:00
+[taxonomies]
+tags = ["reverse", "dwarf"]
+# categories = ["Reverse"]
++++
 
 这题使用了DWARF字节码，需要了解DWARF相关知识，实际上是c++异常处理中的相关知识。这题利用异常处理的栈回溯，执行了一段设计好的DWARF字节码，单纯的跟踪是跟踪不到的
 
 这题怪我没有心去做这题，不然早就出了，最近想改变一下心态，既然不能摆脱，那就走到底。
 
-<!--more-->
+<!-- more -->
 
 # c++异常处理
 

@@ -1,14 +1,11 @@
----
-title: "Binary Diffing 1"
-date: 2023-08-19T15:56:52+08:00
-categories:
-- Paper
-tags:
-- binary diffing
-- reverse
-- machine learning
-math: true
----
++++
+title = "Binary Diffing"
+date = 2023-08-19T15:56:52+08:00
+
+[taxonomies]
+tags = ["machine learning", "Smart Contract", "reverse", "binary diffing"]
+# categories = ["Paper"]
++++
 
 最近想看看binary diffing的内容，直接从头看看一篇篇翻，涉及到很多机器学习内容，很多不懂的，慢慢来看吧。这里先看了10几篇，很多都只看了一个摘要。
 主要是了解一下思路，看看这个领域的内容的研究历史，Binary Diffing 1暂时只看到2016年的paper，后续继续更新，主要文章引用如下
@@ -27,7 +24,7 @@ math: true
 + Scalable Graph-based Bug Search for Firmware Images. 
 + Crossarchitecture binary semantics understanding via similar code comparison. 
 
-<!--more-->
+<!-- more -->
 
 # 背景
 

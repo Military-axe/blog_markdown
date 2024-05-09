@@ -1,13 +1,11 @@
----
-title: "BiAn: Smart Contract Source Code Obfuscation"
-date: 2023-10-12T14:42:18+08:00
-categories:
-- Paper
-- reverse
-tags:
-- Smart Contract
-- Obfuscation
----
++++
+title = "BiAn: Smart Contract Source Code Obfuscation"
+date = 2023-10-12T14:42:18+08:00
+
+[taxonomies]
+tags = ["Obfuscation", "Smart Contract"]
+# categories = ["Reverse", "Paper"]
++++
 
 智能合约代码混淆，感觉还是ollvm的影子，还是那三种模式，只是做了相关的适配以及加了很多其他细节，总体思路是没有变的。
 
@@ -17,7 +15,7 @@ tags:
 >
 > 等级：CCF-A
 
-<!--more-->
+<!-- more -->
 
 这篇文章聚焦的领域是智能合约代码混淆，首先说说智能合约代码现状的一些问题。
 

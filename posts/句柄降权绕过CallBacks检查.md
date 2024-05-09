@@ -1,19 +1,17 @@
----
-title: "句柄降权绕过CallBacks检查"
-date: 2024-04-29T22:01:29+08:00
-toc: true
-categories:
-- Reverse
-tags:
-- 句柄降权
-- Windows
----
++++
+title = "句柄降权绕过CallBacks检查"
+date = 2024-04-29T22:01:29+08:00
+
+[taxonomies]
+tags = ["windows", "句柄降权", "x64"]
+# categories = ["Driver"]
++++
 
 ObRegistyCallBacks保护指定进程，可以让攻击程序OpenProcess打开指定进程后获取的句柄权限是我们指定的权限范围, 比如不能读取进程内存, 不能终止进程。
 
 如何绕过这种保护，可以使用句柄降权/提权的方法，就可以对提高已经获取到的句柄权限。
 
-<!--more-->
+<!-- more -->
 
 # 句柄降权
 

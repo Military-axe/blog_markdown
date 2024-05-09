@@ -1,16 +1,11 @@
----
-title: "Rust编写几种hook的方式"
-date: 2024-03-22T15:59:44+08:00
-categories:
-- Reverse
-tags:
-- hook
-- rust
-- iat hook
-- vmt hook
-- inline hook
-- retour
----
++++
+title = "Rust编写几种hook的方式"
+date = 2024-03-22T15:59:44+08:00
+
+[taxonomies]
+tags = ["retour", "inline hook", "vmt hook", "iat hook", "rust", "hook"]
+# categories = ["Reverse"]
++++
 
 使用Rust编写几种在windows上常用的hook方式:
 
@@ -20,7 +15,7 @@ tags:
 
 为什么要用rust的不用c++？就是想用，想给自己找麻烦😎
 
-<!--more-->
+<!-- more -->
 
 # Rust windows-rs 库使用
 
