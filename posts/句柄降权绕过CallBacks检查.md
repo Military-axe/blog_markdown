@@ -4,7 +4,7 @@ date = 2024-04-29T22:01:29+08:00
 
 [taxonomies]
 tags = ["windows", "句柄降权", "x64"]
-# categories = ["Driver"]
+categories = ["Driver"]
 +++
 
 ObRegistyCallBacks保护指定进程，可以让攻击程序OpenProcess打开指定进程后获取的句柄权限是我们指定的权限范围, 比如不能读取进程内存, 不能终止进程。

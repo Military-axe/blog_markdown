@@ -4,7 +4,7 @@ date = 2024-03-02T15:52:25+08:00
 
 [taxonomies]
 tags = ["obfuscation", "obfuscation", "taint analysis"]
-# categories = ["Paper", "Reverse"]
+categories = ["Paper", "Reverse"]
 +++
 
 Rust语言污点分析相关的几篇内容

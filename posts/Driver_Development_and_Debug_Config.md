@@ -4,7 +4,7 @@ date = 2023-06-08T13:58:36+08:00
 
 [taxonomies]
 tags = ["debug", "driver development"]
-# categories = ["Driver"]
+categories = ["Driver"]
 +++
 
 配置windows驱动开发环境与windbg preview调试技巧，还会记录一下遇到的问题

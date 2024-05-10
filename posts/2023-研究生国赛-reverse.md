@@ -3,7 +3,7 @@ title = "2023 研究生国赛 Reverse"
 date = 2023-09-27T23:08:11+08:00
 [taxonomies]
 tags = ["rc4", "反调试", "2023", "研究生国赛", "base64"]
-# categories = ["Reverse"]
+categories = ["Reverse"]
 +++
 
 4道题做了3到，都不太方便纯静态，动调倒是都挺简单的. 最后一题unity的游戏没什么经验，不知道怎么下手，CE也没下就放弃了

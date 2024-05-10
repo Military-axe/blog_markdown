@@ -4,7 +4,7 @@ date = 2023-07-17T15:43:19+08:00
 
 [taxonomies]
 tags = ["rsa", "obfuscate"]
-# categories = ["Reverse"]
+categories = ["Reverse"]
 +++
 
 Obfuscate项目是用于隐藏字符串，增加分析的难度，但是Obfuscate只能对抗静态的分析。zer0pts比赛中的一题就是利用这个项目，但是它很巧妙，隐藏的是模块的函数名，主要逻辑是调用so文件的模块，它隐藏so中的函数名后，从静态分析是很难看出来调用的逻辑是什么，忽然感觉这个项目就有点用了。

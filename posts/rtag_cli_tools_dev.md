@@ -4,7 +4,7 @@ date = 2023-09-01T16:15:57+08:00
 
 [taxonomies]
 tags = ["tag", "mongodb", "rust"]
-# categories = ["Develop"]
+categories = ["Develop"]
 +++
 
 自己无聊，想开发开发。想着最近需要一个tag管理的系统，我用的是windows的，文件管理是层级管理，不是tag的，想着写一个也不难，就自己写了一下。开发语言用rust，数据库使用mongodb，手很生，写了好几天，累死✌了。

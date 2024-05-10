@@ -4,7 +4,7 @@ date = 2023-06-14T15:53:46+08:00
 
 [taxonomies]
 tags = ["fuzz","macOS"]
-# categories = ["Paper"]
+categories = ["Paper"]
 +++
 
 来自清华vul337实验室与蚂蚁基础安全合作的一篇2023年USENIX Security的文章

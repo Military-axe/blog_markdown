@@ -3,7 +3,7 @@ title = "2023 ciscn ezbytes Write Up"
 date = 2023-06-11T15:40:13+08:00
 [taxonomies]
 tags = ["reverse", "dwarf"]
-# categories = ["Reverse"]
+categories = ["Reverse"]
 +++
 
 这题使用了DWARF字节码，需要了解DWARF相关知识，实际上是c++异常处理中的相关知识。这题利用异常处理的栈回溯，执行了一段设计好的DWARF字节码，单纯的跟踪是跟踪不到的

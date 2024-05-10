@@ -4,7 +4,7 @@ date = 2023-07-23T21:36:57+08:00
 
 [taxonomies]
 tags = ["llvm", "reverse", "obfuscation"]
-# categories = ["Paper", "Reverse"]
+categories = ["Paper", "Reverse"]
 +++
 
 这是一篇CCFB的文章，来自中科大，文章提出了一种新的二进制混淆模式来抵抗binary diffing技术的分析。

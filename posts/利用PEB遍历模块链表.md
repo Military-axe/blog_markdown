@@ -4,7 +4,7 @@ date = 2024-03-19T11:36:56+08:00
 
 [taxonomies]
 tags = ["c++", "peb"]
-# categories = ["Reverse"]
+categories = ["Reverse"]
 +++
 
 使用c++, rust实现遍历PEB获取模块信息的代码段. 主要练练rust

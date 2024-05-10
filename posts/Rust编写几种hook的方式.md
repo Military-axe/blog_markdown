@@ -4,7 +4,7 @@ date = 2024-03-22T15:59:44+08:00
 
 [taxonomies]
 tags = ["retour", "inline hook", "vmt hook", "iat hook", "rust", "hook"]
-# categories = ["Reverse"]
+categories = ["Reverse"]
 +++
 
 使用Rust编写几种在windows上常用的hook方式:

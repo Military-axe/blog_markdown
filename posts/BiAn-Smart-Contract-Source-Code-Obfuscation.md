@@ -4,7 +4,7 @@ date = 2023-10-12T14:42:18+08:00
 
 [taxonomies]
 tags = ["Obfuscation", "Smart Contract"]
-# categories = ["Reverse", "Paper"]
+categories = ["Reverse", "Paper"]
 +++
 
 智能合约代码混淆，感觉还是ollvm的影子，还是那三种模式，只是做了相关的适配以及加了很多其他细节，总体思路是没有变的。

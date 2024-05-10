@@ -4,7 +4,7 @@ date = "2023-06-07T13:37:53+08:00"
 
 [taxonomies]
 tags = ["reverse","android"]
-# categories = ["Reverse"]
+categories = ["Reverse"]
 +++
 
 前些天没做出来的题目，后面再思考后发现了自己忽略so文件中调用java代码，赛后做了出来整理在此。
