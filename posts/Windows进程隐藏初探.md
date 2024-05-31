@@ -220,7 +220,7 @@ pub struct SYSTEM_PROCESS_INFORMATION {
 
 其中`UniqueProcessId`表示进程pid，也是我们对比是否是目标进程的值。然后`NextEntryOffset`表示下一个SYSTEM_PROCESS_INFORMATION距离当前这个结构体的偏移值
 
-![1](C:\Users\mi1it\Documents\note\进程隐藏初探.assets\1.svg)
+![](https://s2.loli.net/2024/05/31/QdgwEjzDxVNGXBZ.png)
 
 
 
@@ -350,11 +350,11 @@ unsafe extern "system" fn DllMain(_hinst: HANDLE, reason: u32, _reserved: *mut c
 
 注入前
 
-![image-20240521213951309](C:\Users\mi1it\Documents\note\进程隐藏初探.assets\image-20240521213951309.png)
+![image-20240521213951309](https://s2.loli.net/2024/05/31/D2yiMpuP4QCkt8G.png)
 
 注入任务管理器后则无法搜索到对应的进程。
 
-![image-20240521214135198](C:\Users\mi1it\Documents\note\进程隐藏初探.assets\image-20240521214135198.png)
+![image-20240521214135198](https://s2.loli.net/2024/05/31/O9p6yai3zfNKwuv.png)
 
 #### [全局hook] SetWindowsHookEx
 
@@ -364,11 +364,11 @@ unsafe extern "system" fn DllMain(_hinst: HANDLE, reason: u32, _reserved: *mut c
 
 windows正常消息处理流程如下：
 
-![](C:\Users\mi1it\Documents\note\进程隐藏初探.assets\1-1716440388238-2.svg)
+![](https://s2.loli.net/2024/05/31/TIQZJ8ozOMFAbnD.png)
 
 使用SetWindowsHookEx之后的消息处理流程则是
 
-![](C:\Users\mi1it\Documents\note\进程隐藏初探.assets\2.svg)
+![](https://s2.loli.net/2024/05/31/hqS8JuYQlEZsmwb.png)
 
 ```c
 HHOOK SetWindowsHookExA(
