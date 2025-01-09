@@ -1,11 +1,15 @@
-+++
-title = "Frida call java class/method to explode"
-date = 2023-07-07T10:01:10+08:00
-
-[taxonomies]
-tags = ["frida", "android", "reverse"]
-categories = ["Reverse", "Mobile"]
-+++
+---
+title: "Frida call java class/method to explode"
+date: 2023-07-07T10:01:10+08:00
+toc: true
+categories:
+- Reverse
+- Mobile
+tags:
+- frida
+- android
+- reverse
+---
 
 利用Frida去调用java代码中的类，然后爆破。算是一种主动的方法。主要是之前有一道apk题目是爆破的思路，但是我不会写java代码，想起来很难受，冲浪的时候看到[Sakura](https://eternalsakura13.com/)的blog有感，就再去试试，并记录在此。然后发现这题原来是adword原题，（其实题目挺简单，只是当时摆），气死✌了。
 
@@ -20,7 +24,7 @@ for (...) {
 }
 ```
 
-<!-- more -->
+<!--more-->
 
 # 背景知识
 

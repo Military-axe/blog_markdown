@@ -1,11 +1,13 @@
-+++
-title = "KextFuzz Fuzzing macOS Kernel EXTensions on Apple Silicon via Exploiting Mitigations"
-date = 2023-06-14T15:53:46+08:00
-
-[taxonomies]
-tags = ["fuzz","macOS"]
-categories = ["Paper"]
-+++
+---
+title: "KextFuzz Fuzzing macOS Kernel EXTensions on Apple Silicon via Exploiting Mitigations"
+date: 2023-06-14T15:53:46+08:00
+toc: true
+categories:
+- Paper
+tags:
+- fuzz
+- macOS
+---
 
 来自清华vul337实验室与蚂蚁基础安全合作的一篇2023年USENIX Security的文章
 
@@ -13,8 +15,7 @@ categories = ["Paper"]
 
 通过替换arm的PA指令来插桩，做覆盖率统计；通过本地hook特权检查函数来绕过苹果的检查，进一步fuzz特权代码；设计一个污点分析模块，分析macOS内核接口格式，辅助fuzz
 
-<!-- more -->
-
+<!--more-->
 
 # 背景与困难
 

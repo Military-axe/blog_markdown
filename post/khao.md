@@ -1,17 +1,21 @@
-+++
-title = "Khaos: The Impact of Inter-procedural Code Obfuscation on Binary Diffing Techniques"
-date = 2023-07-23T21:36:57+08:00
-
-[taxonomies]
-tags = ["llvm", "reverse", "obfuscation"]
-categories = ["Paper", "Reverse"]
-+++
+---
+title: "Khaos: The Impact of Inter-procedural Code Obfuscation on Binary Diffing Techniques"
+date: 2023-07-23T21:36:57+08:00
+toc: true
+categories:
+- Paper
+- Reverse
+tags:
+- llvm
+- reverse
+- obfuscation
+---
 
 这是一篇CCFB的文章，来自中科大，文章提出了一种新的二进制混淆模式来抵抗binary diffing技术的分析。
 
 从混淆角度，它是从IR层面切割函数并融合函数，改变了函数的调用关系。与OLLVM是不冲突的混淆，对抵抗binary diffing有很好的效果，并且也是基于LLVM框架，对混淆技术的发展是有意义的。
 
-<!-- more -->
+<!--more-->
 
 # 背景
 

@@ -1,12 +1,17 @@
-+++
-title = "Windows进程隐藏初探"
-date = 2024-05-30
-[taxonomies]
-tags = ["windows", "hide", "driver", "hook"]
-categories = ["Driver"]
-+++
+---
+title: "Windows进程隐藏初探"
+date: 2024-05-30
+toc: true
+categories:
+- Driver
+tags:
+- windows
+- hide
+- driver
+- hook
+---
 
-<!-- more -->
+<!--more-->
 
 # Windows进程隐藏初探
 

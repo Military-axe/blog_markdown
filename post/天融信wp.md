@@ -1,17 +1,20 @@
-+++
-title = "2023 Two Reverse CrackMe WriteUp"
-date = 2023-06-30T17:05:32+08:00
-
-[taxonomies]
-tags = ["movfuscator", "junk", "reverse"]
-categories = ["Reverse"]
-+++
+---
+title: "2023 Two Reverse CrackMe WriteUp"
+date: 2023-06-30T17:05:32+08:00
+toc: true
+categories:
+- Reverse
+tags:
+- movfuscator
+- junk
+- reverse
+---
 
 前几天打了一个应该是天融信的比赛，题目不难，简单记录一下。
 
 一道是花指令+rc4，一道是mov混淆
 
-<!-- more -->
+<!--more-->
 
 # junk
 

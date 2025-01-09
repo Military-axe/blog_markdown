@@ -1,15 +1,20 @@
-+++
-title = "2023 香山杯 Reverse"
-date = 2023-10-16T14:05:44+08:00
-
-[taxonomies]
-tags = ["2023", "香山杯", "vm", "android", "base64", "xor"]
-categories = ["Reverse"]
-+++
+---
+title: "2023 香山杯 Reverse"
+date: 2023-10-16T14:05:44+08:00
+toc: true
+categories:
+- Reverse
+tags:
+- vm
+- 香山杯
+- android
+- base64
+- xor
+---
 
 香山杯初赛的3到逆向的WP，不是很难的题，但是有一些新的东西，chaquopy框架，这个框架完成了一套sdk，可以安卓调用python代码也可以python调用java代码。可惜的是python是源码存储，还有研究的空间
 
-<!-- more -->
+<!--more-->
 
 ## URL从哪儿来
 
