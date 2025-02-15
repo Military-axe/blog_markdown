@@ -2,12 +2,8 @@
 title: "Rust污点分析调研"
 date: 2024-03-02T15:52:25+08:00
 toc: true
-categories:
-- Paper
-- Reverse
-tags:
-- obfuscation
-- taint analysis
+categories: Paper
+tags: [obfuscation, "taint analysis"]
 ---
 
 Rust语言污点分析相关的几篇内容

@@ -2,14 +2,8 @@
 title: "Binary Diffing"
 date: 2023-08-19T15:56:52+08:00
 toc: true
-categories:
-- Reverse
-- Paper
-tags:
-- machine learning
-- Smart Contract
-- reverse
-- binary diffing
+categories: Paper
+tags: ["machine learning", "Smart Contract", reverse, "binary diffing"]
 ---
 
 最近想看看binary diffing的内容，直接从头看看一篇篇翻，涉及到很多机器学习内容，很多不懂的，慢慢来看吧。这里先看了10几篇，很多都只看了一个摘要。

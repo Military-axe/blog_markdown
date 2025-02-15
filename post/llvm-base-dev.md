@@ -2,10 +2,8 @@
 title: "llvm base development environment configuration"
 date: 2025-01-25T15:28:53+08:00
 toc: true
-categories:
-- c++
-tags:
-- llvm
+categories: C++
+tags: [llvm, c++]
 ---
 
 之前一直以为编译llvm的pass需要编译一整个llvm,然后llvm编译的内存要求要又很高（50G交换空间都不够！然后发现其实完全不需要，安装库就可以，编译参数也可以通过llvm-config来获取。 我这里使用arch,做一下简单的记录

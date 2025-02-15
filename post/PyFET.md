@@ -2,12 +2,8 @@
 title: "PyFET: Forensically Equivalent Transformation for Python Binary Decompilation"
 date: 2023-06-10T21:12:15+08:00
 toc: true
-categories:
-- Reverse
-- Paper
-tags:
-- decompile
-- python
+categories: Paper
+tags: [decompile, python]
 ---
 
 2023 S&P论文，讲述的是python反编译的研究工作，总结了大量的反编译特征，针对恶意代码分析领域，提供一种新的解决方案。

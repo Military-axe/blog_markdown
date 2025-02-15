@@ -2,12 +2,8 @@
 title: "2023 Two Reverse CrackMe WriteUp"
 date: 2023-06-30T17:05:32+08:00
 toc: true
-categories:
-- Reverse
-tags:
-- movfuscator
-- junk
-- reverse
+categories: Reverse
+tags: [movfuscator, junk, reverse]
 ---
 
 前几天打了一个应该是天融信的比赛，题目不难，简单记录一下。

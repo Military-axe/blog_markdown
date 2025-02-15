@@ -2,12 +2,8 @@
 title: "Frida learn && sctf 2023 checkFlow"
 date: 2023-07-03T16:06:30+08:00
 toc: true
-categories:
-- Reverse
-tags:
-- sctf
-- frida
-- reverse
+categories: Reverse
+tags: [sctf ,frida ,reverse]
 ---
 
 没有打sctf，但是赛后看NU1L wp时，看到checkFlow这题，师傅用frida调用本身函数来爆破。虽然这种爆破要求本身函数状态不受运行的影响，但还是很好的做法。这种做法一直都有，只是我一直没去了解，这次看到这个，就学习一下

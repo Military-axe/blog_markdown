@@ -2,11 +2,8 @@
 title: "利用PEB遍历模块链表"
 date: 2024-03-19T11:36:56+08:00
 toc: true
-categories:
-- Reverse
-tags:
-- peb
-- c++"
+categories: Reverse
+tags: [peb, c++]
 ---
 
 使用c++, rust实现遍历PEB获取模块信息的代码段. 主要练练rust

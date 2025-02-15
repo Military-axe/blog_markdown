@@ -2,12 +2,8 @@
 title: "C++ static polymorphism && Curiously recurring template pattern"
 date: 2025-01-10T00:40:23+08:00
 toc: true
-categories:
-- C++
-tags:
-- c++
-- polymorphism
-- CRTP
+categories: C++
+tags: [c++ ,polymorphism ,CRTP]
 ---
 
 在看llvm新旧版pass manager的时候，看到其中一个设计是使用CRTP这种模式，对我来说还是很陌生的。或者说C++多态我都不太熟，于是简单学习一下这个部分（C++真tm难啊

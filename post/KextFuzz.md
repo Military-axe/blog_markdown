@@ -2,11 +2,8 @@
 title: "KextFuzz Fuzzing macOS Kernel EXTensions on Apple Silicon via Exploiting Mitigations"
 date: 2023-06-14T15:53:46+08:00
 toc: true
-categories:
-- Paper
-tags:
-- fuzz
-- macOS
+categories: Paper
+tags: [fuzz, macOS]
 ---
 
 来自清华vul337实验室与蚂蚁基础安全合作的一篇2023年USENIX Security的文章

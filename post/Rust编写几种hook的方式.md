@@ -2,15 +2,8 @@
 title: "Rust编写几种hook的方式"
 date: 2024-03-22T15:59:44+08:00
 toc: true
-categories:
-- Reverse
-tags:
-- retour
-- inline hook
-- vmt hook
-- iat hook
-- rust
-- hook
+categories: Reverse
+tags: [retour, inline hook, vmt hook, iat hook, rust, hook]
 ---
 
 使用Rust编写几种在windows上常用的hook方式:

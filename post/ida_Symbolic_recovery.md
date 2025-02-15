@@ -2,12 +2,8 @@
 title: "Ida Symbolic Recovery"
 date: 2023-07-03T21:51:06+08:00
 toc: true
-categories:
-- Reverse
-tags:
-- sig
-- ida
-- reverse
+categories: Reverse
+tags: [sig, ida, reverse]
 ---
 
 最近发现二进制文件中符号恢复的手段有不少，这里想记录一下几种符号恢复的工具使用与效果对比。

@@ -2,11 +2,8 @@
 title: "Driver Development and Debug Config"
 date: 2023-06-08T13:58:36+08:00
 toc: true
-categories:
-- Driver
-tags:
-- debug
-- driver development
+categories: Driver
+tags: [debug, driver development]
 ---
 
 配置windows驱动开发环境与windbg preview调试技巧，还会记录一下遇到的问题

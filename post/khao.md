@@ -2,13 +2,8 @@
 title: "Khaos: The Impact of Inter-procedural Code Obfuscation on Binary Diffing Techniques"
 date: 2023-07-23T21:36:57+08:00
 toc: true
-categories:
-- Paper
-- Reverse
-tags:
-- llvm
-- reverse
-- obfuscation
+categories: Paper
+tags: [llvm,reverse,obfuscation]
 ---
 
 这是一篇CCFB的文章，来自中科大，文章提出了一种新的二进制混淆模式来抵抗binary diffing技术的分析。

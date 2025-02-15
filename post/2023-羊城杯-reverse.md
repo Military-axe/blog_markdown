@@ -2,14 +2,8 @@
 title: "2023 羊城杯 Reverse"
 date: 2023-09-06T17:50:41+08:00
 toc: true
-categories:
-- Reverse
-tags:
-- vm
-- 羊城杯
-- DES
-- base64
-- golang
+categories: Reverse
+tags: [vm, 羊城杯, DES, base64, golang]
 ---
 
 没打，王哥发了我三题，我就看了一下，稍微多花了时间。
